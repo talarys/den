@@ -1,4 +1,9 @@
-{ inputs, den, ... }:
+{
+  inputs,
+  den,
+  __findFile,
+  ...
+}:
 {
   den.hosts.x86_64-linux.void.users.talarys = { };
 
