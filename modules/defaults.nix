@@ -42,8 +42,6 @@
     # Automatically create the user on host.
     <den/primary-user>
 
-    # Disable booting when running on CI on all NixOS hosts.
-    <no-boot>
     # Autoset hostname
     (den.lib.take.exactly (
       { OS, host }:
