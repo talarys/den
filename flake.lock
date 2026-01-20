@@ -173,6 +173,42 @@
         "type": "github"
       }
     },
+    "nixCats": {
+      "locked": {
+        "lastModified": 1764009888,
+        "narHash": "sha256-hJekfTiW1792txgRSM4LcHnz1lDSY87LYbsJEn2V378=",
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "rev": "16ac3281f322ea15d39843829e42a44d22da3715",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "type": "github"
+      }
+    },
+    "nixcats": {
+      "inputs": {
+        "nixCats": "nixCats",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768248260,
+        "narHash": "sha256-sjWY3YPBWWlBvXbw3ZPtqamo+U0WoEzhsMJtK+l6K1Y=",
+        "owner": "talarys",
+        "repo": "nixcats",
+        "rev": "78e4b4f82623494f741632c4318eb61c19a3d772",
+        "type": "github"
+      },
+      "original": {
+        "owner": "talarys",
+        "repo": "nixcats",
+        "type": "github"
+      }
+    },
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -252,6 +288,7 @@
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "nix-index-database": "nix-index-database",
+        "nixcats": "nixcats",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
         "systems": "systems",

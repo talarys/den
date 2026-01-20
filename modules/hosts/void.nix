@@ -7,7 +7,7 @@
 
   den.aspects.void = {
     includes = [
-      <system/no-boot>
+      <system/wsl>
       <overlays>
     ];
   };
