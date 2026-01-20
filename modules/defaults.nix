@@ -1,13 +1,16 @@
 {
   den,
   __findFile,
+  inputs,
   ...
 }:
 {
   den.default = {
     nixos = {
+      imports = [ inputs.nix-index-database.nixosModules.nix-index ];
       system.stateVersion = "25.05";
       nixpkgs.config.allowUnfree = true;
+      programs.nix-index-database.comma.enable = true;
     };
 
     homeManager = {
