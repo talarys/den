@@ -5,8 +5,16 @@
 }:
 {
   den.default = {
-    nixos.system.stateVersion = "25.05";
-    homeManager.home.stateVersion = "25.05";
+    nixos = {
+      system.stateVersion = "25.05";
+      nixpkgs.config.allowUnfree = true;
+    };
+
+    homeManager = {
+      home.stateVersion = "25.05";
+    };
+
+    systemd.user.startServices = "sd-switch";
 
     nix = {
       settings = {
