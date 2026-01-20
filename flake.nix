@@ -20,6 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Den
     den.url = "github:vic/den";
     flake-aspects.url = "github:vic/flake-aspects";
