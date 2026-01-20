@@ -2,9 +2,11 @@
   den.aspects.shell._.yazi.homeManager =
     { pkgs, ... }:
     let
-      flavors = pkgs.fetchgit {
-        url = "https://github.com/yazi-rs/flavors";
+      flavors = pkgs.fetchFromGitHub {
+        owner = "yazi-rs";
+        repo = "flavors";
         rev = "main";
+        sha256 = "sha256-xGnebGuSOZpQl/QhuZkwgrjfAlfbEtruA9UVe030mZM=";
       };
     in
     {
