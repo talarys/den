@@ -8,7 +8,7 @@
 
   den.aspects.void = {
     nixos = {
-      imports = with inputs; [ inputs.nixos-wsl.nixosModules.wsl ];
+      imports = [ inputs.nixos-wsl.nixosModules.wsl ];
 
       wsl = {
         enable = true;
