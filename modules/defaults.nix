@@ -14,6 +14,13 @@
       nixpkgs.config.allowUnfree = true;
       programs.nix-index-database.comma.enable = true;
 
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        backupFileExtension = "backup";
+        extraSpecialArgs = { inherit inputs; };
+      };
+
       nix = {
         settings = {
           warn-dirty = false;
