@@ -1,5 +1,5 @@
 {
-  den.aspects.disko._.simple.disko.devices = {
+  den.aspects.disko._.simple.nixos.disko.devices = {
     disk = {
       basic = {
         device = "/dev/sda";

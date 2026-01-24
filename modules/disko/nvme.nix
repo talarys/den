@@ -9,7 +9,7 @@ let
   ];
 in
 {
-  den.aspects.disko._.brtrs.disko = {
+  den.aspects.disko._.brtrs.nixos.disko = {
     devices = {
       disk = {
         nvme = {
