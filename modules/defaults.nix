@@ -10,7 +10,11 @@
     homeManager.home.stateVersion = "25.05";
 
     nixos = {
-      imports = [ inputs.nix-index-database.nixosModules.nix-index ];
+      imports = [
+        inputs.nix-index-database.nixosModules.nix-index
+        inputs.disko.nixosModules.disko
+      ];
+
       nixpkgs.config.allowUnfree = true;
       programs.nix-index-database.comma.enable = true;
 
