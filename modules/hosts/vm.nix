@@ -8,9 +8,7 @@
 
   den.aspects.vm = {
     nixos = {
-      imports = [
-        inputs.disko.nixosModules.disko
-      ];
+      imports = [ ];
 
       virtualisation.hypervGuest.enable = true;
 
@@ -25,6 +23,8 @@
       <overlays>
       <system/systemd-boot>
       <system/locale>
+      <system/ssh/client>
+      <system/ssh/server>
     ];
   };
 }
