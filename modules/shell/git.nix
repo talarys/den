@@ -16,7 +16,7 @@
             };
             settings = {
               user.name = "talarys";
-              user.email = "talarys@proton.me";
+              user.email = "d.simon.ssx0@gmail.com";
               pull.rebase = true;
               rerere.enabled = true;
               column.ui = "auto";

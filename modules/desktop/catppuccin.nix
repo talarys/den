@@ -3,7 +3,7 @@ let
   wallpaper = inputs.self + /assets/background_upscaled.png;
 in
 {
-  den.aspects.catppuccin = flavor: accent: {
+  den.aspects.desktop._.catppuccin = flavor: accent: {
     nixos = {
       imports = [ inputs.catppuccin.nixosModules.default ];
       catppuccin = {

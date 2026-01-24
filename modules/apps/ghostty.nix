@@ -9,7 +9,7 @@
         font-family = "JetBrains Mono Nerd Font";
         font-size = 12;
         background-opacity = 0.9;
-        theme = "catppuccin-mocha";
+        theme = "Catppuccin Mocha";
         shell-integration-features = true;
         window-decoration = "server";
         window-padding-x = 4;

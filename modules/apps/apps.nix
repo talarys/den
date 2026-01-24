@@ -4,7 +4,7 @@
     {
       home.packages = with pkgs; [
         obsidian
-        qbittorent
+        qbittorrent
         blender
       ];
     };
