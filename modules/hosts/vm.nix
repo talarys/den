@@ -33,6 +33,7 @@
 
       <desktop/sddm>
       <desktop/kde>
+      <desktop/niri>
       <desktop/plymouth>
       # <desktop/catppuccin>
 
