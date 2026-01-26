@@ -33,6 +33,7 @@
 
       <desktop/sddm>
       <desktop/kde>
+      <desktop/plymouth>
       # <desktop/catppuccin>
 
       <apps/apps>
