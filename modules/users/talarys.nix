@@ -19,6 +19,7 @@
       <shell/fish>
       <shell/nushell>
       <shell/yazi>
+      <shell/env>
     ];
 
     nixos =
