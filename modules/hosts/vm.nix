@@ -29,11 +29,11 @@
       <system/audio>
       <system/fonts>
       <system/networking>
-      <system/xdg>
+      # <system/xdg>
 
       <desktop/sddm>
       <desktop/kde>
-      <desktop/catppuccin>
+      # <desktop/catppuccin>
 
       <apps/apps>
       <apps/ghostty>

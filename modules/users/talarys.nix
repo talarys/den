@@ -9,7 +9,8 @@
   den.aspects.talarys = {
     includes = [
       <shell/distrobox>
-      <shell/git>
+      # TODO: fix git
+      # <shell/git>
       <shell/nh>
       <shell/nix-tools>
       <shell/utils>
