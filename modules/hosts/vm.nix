@@ -24,8 +24,7 @@
 
       <system/systemd-boot>
       <system/locale>
-      <system/ssh/client>
-      <system/ssh/server>
+      <system/ssh>
       <system/audio>
       <system/fonts>
       <system/networking>

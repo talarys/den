@@ -1,13 +1,14 @@
 {
-  den.aspects.system._.ssh.provides = {
-    client.homemanger.services.ssh-agent = {
-      enable = true;
-      enableBashIntegration = true;
-      enableFishIntegration = true;
-      enableNushellIntegration = true;
-    };
-    server.nixos.services.openssh = {
-      enable = true;
+  den.aspects.system._.ssh = {
+    homeManger = {
+      programs.keychain = {
+        enable = true;
+        enableBashIntegration = true;
+        enableFishIntegration = true;
+        enableNushellIntegration = true;
+        keys = [ "id_ed25519" ];
+        agents = [ "ssh" ];
+      };
     };
   };
 }

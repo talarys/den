@@ -19,6 +19,7 @@
 
     includes = [
       <overlays>
+      <system/ssh>
     ];
   };
 }

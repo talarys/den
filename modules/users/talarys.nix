@@ -3,14 +3,12 @@
   ...
 }:
 {
-
   den.homes.x86_64-linux.talarys = { };
 
   den.aspects.talarys = {
     includes = [
       <shell/distrobox>
-      # TODO: fix git
-      # <shell/git>
+      <shell/git>
       <shell/nh>
       <shell/nix-tools>
       <shell/utils>
