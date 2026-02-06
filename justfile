@@ -22,5 +22,5 @@ fmt:
 anywhere host target:
     nix run github:nix-community/nixos-anywhere -- --flake {{ host }} --host-target {{ target }}
 
-disko-install host:
-    sudo nix --extra-experimental-features "nix-command flakes" run 'github:nix-community/disko/latest#disko-install' -- --flake .#{{ host }}
+disko-install host disk target:
+    sudo nix --extra-experimental-features "nix-command flakes" run 'github:nix-community/disko/latest#disko-install' -- --flake .{{ host }} --disk {{ disk }} {{ target }}
