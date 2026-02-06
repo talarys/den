@@ -9,10 +9,10 @@ let
   ];
 in
 {
-  den.aspects.disko._.brtrs.nixos.disko = {
+  den.aspects.disko._.btrfs.nixos.disko = {
     devices = {
       disk = {
-        nvme = {
+        btrfs = {
           type = "disk";
           inherit device;
           content = {
