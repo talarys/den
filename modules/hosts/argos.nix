@@ -1,6 +1,5 @@
 {
   __findFile,
-  inputs,
   ...
 }:
 {
@@ -32,6 +31,7 @@
       <system/fonts>
       <system/networking>
       <system/nvidia>
+      <system/gaming>
 
       <desktop/sddm>
       <desktop/kde>
