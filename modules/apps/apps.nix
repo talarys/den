@@ -9,6 +9,8 @@
         zathura
         feh
         nsxiv
+        readest
+        calibre
       ];
     };
 }
