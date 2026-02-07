@@ -25,6 +25,7 @@
         winetricks # Wine helper
         protonup-qt # Manage Proton versions
         protontricks # Proton helper
+        protonplus # Custom Proton builds
 
         # Game utilities
         gamemode # Optimizations for gaming
