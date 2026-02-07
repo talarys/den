@@ -6,6 +6,9 @@
         obsidian
         qbittorrent
         blender
+        zathura
+        feh
+        nsxiv
       ];
     };
 }

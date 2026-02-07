@@ -31,6 +31,7 @@
       <system/networking>
       <system/nvidia>
       <system/gaming>
+      <system/xdg>
 
       <desktop/sddm>
       <desktop/kde>
