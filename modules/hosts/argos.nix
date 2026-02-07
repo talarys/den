@@ -17,6 +17,16 @@
         ];
 
         disko.devices.disk.nvme.device = lib.mkForce "/dev/nvme1n1";
+
+        fileSystems."/mnt/NVME S" = {
+          device = "/dev/disk/by-uuid/44A8CCACA8CC9E34";
+          fsType = "ntfs";
+        };
+
+        fileSystems."/mnt/NVME K" = {
+          device = "/dev/disk/by-uuid/54EE2B1DEE2AF6C0";
+          fsType = "ntfs";
+        };
       };
 
     includes = [
