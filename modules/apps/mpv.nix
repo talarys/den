@@ -11,7 +11,7 @@
           owner = "talarys";
           repo = "mpv-config";
           rev = "eng";
-          sha256 = "sha256-lHogvK6EL4tp9vYyI0elqWIWSpV4d4NIWPHoISXcU80=";
+          sha256 = "sha256-3/ujckxnT1eYg90qnOYcHrwGsHaZtvTG5U0C8cSVzHM=";
         };
         target = ".config/mpv";
       };
