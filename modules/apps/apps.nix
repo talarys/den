@@ -11,6 +11,7 @@
         nsxiv
         readest
         calibre
+        vscode
       ];
     };
 }

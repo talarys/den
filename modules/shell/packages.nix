@@ -96,7 +96,6 @@
 
         # Editors
         neovim
-        vscode
 
         # Android Development
         scrcpy # Android device mirroring
