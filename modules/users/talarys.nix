@@ -12,7 +12,8 @@
       <shell/nh>
       <shell/nix-tools>
       <shell/utils>
-      <shell/packages>
+      <shell/cli>
+      <shell/dev>
       <shell/aliases>
       <shell/fish>
       <shell/nushell>
