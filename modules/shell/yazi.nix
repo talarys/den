@@ -6,7 +6,7 @@
         owner = "yazi-rs";
         repo = "flavors";
         rev = "main";
-        sha256 = "sha256-tCAJXPV7s1akc+zHGdWjmdMPG4NpBE92vcO7LAvI5TI=";
+        sha256 = "sha256-lzts4koNg0l0tMkPku8lpb2X4juBs72NREwzca3UCLs=";
       };
     in
     {
@@ -15,12 +15,12 @@
         rich-cli
         glow
       ];
-
       programs = {
         yazi = {
           enable = true;
           enableFishIntegration = true;
           enableNushellIntegration = true;
+          shellWrapperName = "y";
           flavors = {
             catppuccin-mocha = "${flavors}/flavors/catppuccin-mocha.yazi";
             catppuccin-macchiato = "${flavors}/catppuccin-macchiato.yazi";
