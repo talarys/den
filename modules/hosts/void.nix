@@ -10,6 +10,8 @@
     nixos = {
       imports = [ inputs.nixos-wsl.nixosModules.wsl ];
 
+      networking.hostName = "void";
+
       wsl = {
         enable = true;
         defaultUser = "talarys";
