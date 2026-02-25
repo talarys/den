@@ -25,6 +25,7 @@
           "LICENSE"
           "envdis"
           "modules/_scripts/*"
+          "*.conf"
         ];
       };
     };
