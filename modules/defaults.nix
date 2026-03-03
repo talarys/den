@@ -5,6 +5,8 @@
   ...
 }:
 {
+  den.base.host.home-manager.enable = true;
+
   den.default = {
     nixos.system.stateVersion = "25.05";
     homeManager.home.stateVersion = "25.05";
@@ -58,9 +60,6 @@
   };
 
   den.default.includes = [
-    # Enable home-manager on all hosts.
-    <den/home-manager>
-
     # Automatically create the user on host.
     <den/primary-user>
 
