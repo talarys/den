@@ -26,9 +26,7 @@
         gopls # Go lsp
 
         #Rust
-        cargo # Rust package manager
-        rustc # Rust compiler
-        rustfmt # Rust formatter
+        rustup # Rust all in one
 
         #Zig
         zig # Zig programming language
