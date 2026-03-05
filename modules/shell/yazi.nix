@@ -5,8 +5,8 @@
       flavors = pkgs.fetchFromGitHub {
         owner = "yazi-rs";
         repo = "flavors";
-        rev = "main";
-        sha256 = "sha256-lzts4koNg0l0tMkPku8lpb2X4juBs72NREwzca3UCLs=";
+        rev = "c02c804bb7c8873da8182745654fb57dc63b7348";
+        sha256 = "sha256-ZXJx4iwGCAi6qqDiLSuJvX3UL6XzypxSO7ptspDD/Yw=";
       };
     in
     {
