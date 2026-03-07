@@ -6,6 +6,7 @@
 }:
 {
   den.base.host.home-manager.enable = true;
+  den.base.user.classes = [ "homeManager" ];
 
   den.default = {
     nixos.system.stateVersion = "25.05";
