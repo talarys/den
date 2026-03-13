@@ -5,8 +5,8 @@
   ...
 }:
 {
-  den.base.host.home-manager.enable = true;
-  den.base.user.classes = [ "homeManager" ];
+  den.schema.host.home-manager.enable = true;
+  den.schema.user.classes = [ "homeManager" ];
 
   den.default = {
     nixos.system.stateVersion = "25.05";
@@ -63,13 +63,7 @@
   den.default.includes = [
     # Automatically create the user on host.
     <den/primary-user>
-
-    # Autoset hostname
-    (den.lib.take.exactly (
-      { OS, host }:
-      den.lib.take.unused OS {
-        nixos.networking.hostName = host.hostName;
-      }
-    ))
+    # Automatically set hostname
+    <den/hostname>
   ];
 }
