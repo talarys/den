@@ -7,7 +7,7 @@
         scripts = with pkgs.mpvScripts; [
           uosc
           thumbfast
-          mpv-cheatsheet
+          mpv-cheatsheet-ng
           evafast
           dynamic-crop
           quality-menu
