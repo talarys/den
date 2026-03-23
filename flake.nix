@@ -31,7 +31,7 @@
     };
 
     # Den
-    den.url = "github:vic/den/v0.12.0";
+    den.url = "github:vic/den/latest";
     flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
