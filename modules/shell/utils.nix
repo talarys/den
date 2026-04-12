@@ -2,12 +2,6 @@
   den.aspects.shell._.utils.homeManager =
     { pkgs, ... }:
     {
-      services.ssh-agent = {
-        enable = true;
-        enableFishIntegration = true;
-        enableNushellIntegration = true;
-      };
-
       programs = {
         starship = {
           enable = true;
