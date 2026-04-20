@@ -1,4 +1,5 @@
 {
+  inputs,
   __findFile,
   ...
 }:
@@ -7,9 +8,15 @@
 
   den.aspects.argos = {
     nixos =
-      { lib, ... }:
+      { lib, pkgs, ... }:
       {
         imports = [ ];
+
+        nixpkgs.overlays = [
+          inputs.nix-cachyos-kernel.overlays.default
+        ];
+
+        boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-zen4;
 
         boot.initrd.availableKernelModules = [
           "sd_mod"

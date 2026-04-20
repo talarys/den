@@ -57,6 +57,7 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
 }
