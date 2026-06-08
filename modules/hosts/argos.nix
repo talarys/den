@@ -10,7 +10,7 @@
     nixos =
       { lib, pkgs, ... }:
       {
-        imports = [ ];
+        imports = [ ../../disko/btrfs.nix ];
 
         nixpkgs.overlays = [
           inputs.nix-cachyos-kernel.overlays.default
@@ -37,7 +37,6 @@
       };
 
     includes = [
-      <disko/btrfs>
       <overlays>
 
       <system/systemd-boot>

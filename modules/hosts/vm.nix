@@ -8,7 +8,7 @@
 
   den.aspects.vm = {
     nixos = {
-      imports = [ ];
+      imports = [ ../../disko/simple.nix ];
 
       virtualisation.hypervGuest.enable = true;
 
@@ -19,9 +19,6 @@
     };
 
     includes = [
-      <disko/simple>
-      <overlays>
-
       <system/systemd-boot>
       <system/locale>
       <system/ssh>

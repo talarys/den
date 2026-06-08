@@ -9,7 +9,7 @@ let
   ];
 in
 {
-  den.aspects.disko._.btrfs.nixos.disko = {
+  disko = {
     devices = {
       disk = {
         btrfs = {
