@@ -65,5 +65,7 @@
     <den/primary-user>
     # Automatically set hostname
     <den/hostname>
+    # Allows host to ingest homeManager aspects
+    <den/host-aspects>
   ];
 }
