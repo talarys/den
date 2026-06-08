@@ -5,9 +5,9 @@
         enable = true;
         shellIntegration.enableFishIntegration = true;
         settings = {
-          font-family = "JetBrains Mono Nerd Font";
+          font_family = "JetBrains Mono Nerd Font";
           font_size = 12;
-          background-opacity = 0.9;
+          background_opacity = 0.9;
           theme = "catppuccin-mocha";
         };
       };
