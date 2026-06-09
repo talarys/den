@@ -9,8 +9,8 @@
   den.schema.user.classes = [ "homeManager" ];
 
   den.default = {
-    nixos.system.stateVersion = "25.05";
-    homeManager.home.stateVersion = "25.05";
+    nixos.system.stateVersion = "26.11";
+    homeManager.home.stateVersion = "26.11";
 
     nixos = {
       imports = [
