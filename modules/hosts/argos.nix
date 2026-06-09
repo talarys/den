@@ -44,6 +44,7 @@
       <system/ssh>
       <system/audio>
       <system/fonts>
+      <system/cursors>
       <system/networking>
       <system/nvidia>
       <system/gaming>
@@ -52,6 +53,8 @@
 
       <desktop/sddm>
       <desktop/kde>
+      # <desktop/niri>
+      # <desktop/quickshell>
 
       <apps/apps>
       <apps/ghostty>
