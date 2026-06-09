@@ -48,6 +48,7 @@
       <system/nvidia>
       <system/gaming>
       <system/xdg>
+      <system/podman>
 
       <desktop/sddm>
       <desktop/kde>
@@ -58,6 +59,8 @@
       <apps/mpv>
       <apps/vicinae>
       <apps/zen>
+
+      <containers/audiobookshelf>
     ];
   };
 }
