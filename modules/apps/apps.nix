@@ -12,6 +12,8 @@
         readest
         calibre
         vscode
+        whatsie
+        zapzap
       ];
     };
 }
