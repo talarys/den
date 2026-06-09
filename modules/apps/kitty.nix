@@ -4,11 +4,13 @@
       kitty = {
         enable = true;
         shellIntegration.enableFishIntegration = true;
+        themeFile = "Catppuccin-Mocha";
+        font = {
+          name = "JetBrains Mono Nerd Font";
+          size = 12;
+        };
         settings = {
-          font_family = "JetBrains Mono Nerd Font";
-          font_size = 12;
           background_opacity = 0.9;
-          theme = "catppuccin-mocha";
         };
       };
     };
