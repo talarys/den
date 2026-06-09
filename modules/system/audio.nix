@@ -5,6 +5,8 @@
       ...
     }:
     {
+      security.rtkit.enable = true;
+
       services.pipewire = {
         enable = true;
         audio.enable = true;
@@ -16,6 +18,7 @@
         pavucontrol # PulseAudio volume control
         playerctl # Media player control
         pulseaudio # For pactl command
+        easyeffects # For effects
       ];
     };
 }
