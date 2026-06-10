@@ -4,17 +4,21 @@
     {
       programs.mpv = {
         enable = true;
-        scripts = with pkgs.mpvScripts; [
-          uosc
-          thumbfast
-          mpv-cheatsheet-ng
-          evafast
-          dynamic-crop
-          quality-menu
-          eisa01.simplehistory
-          eisa01.simplebookmark
-          eisa01.smart-copy-paste-2
-        ];
+        scripts =
+          with pkgs.mpvScripts;
+          with pkgs.mpvScripts.builtins;
+          [
+            uosc
+            thumbfast
+            mpv-cheatsheet-ng
+            evafast
+            dynamic-crop
+            quality-menu
+            eisa01.simplehistory
+            eisa01.simplebookmark
+            eisa01.smart-copy-paste-2
+            autoload
+          ];
       };
 
       home.file = {
