@@ -41,6 +41,8 @@
     #Software
     catppuccin.url = "github:catppuccin/nix";
 
+    nix-colors.url = "github:misterio77/nix-colors";
+
     nixcats = {
       url = "github:talarys/nixcats";
       inputs.nixpkgs.follows = "nixpkgs";
