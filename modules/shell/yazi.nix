@@ -35,41 +35,65 @@
               owner = "Reledia";
               repo = "glow.yazi";
               rev = "main";
-              hash = "sha256-celObHo9Y3pFCd1mTx1Lz77Tc22SJTleRblAkbH/RqY=";
+              hash = "sha256-mzW/ut/LTEriZiWF8YMRXG9hZ70OOC0irl5xObTNO40=";
             };
             rich-preview = pkgs.fetchFromGitHub {
               owner = "AnirudhG07";
               repo = "rich-preview.yazi";
               rev = "main";
-              hash = "sha256-celObHo9Y3pFCd1mTx1Lz77Tc22SJTleRblAkbH/RqY=";
+              hash = "sha256-KHmjff7tHFLkPqOs8IdWQ0mCliSZn/mIKYof+ulnddk=";
             };
           };
           settings = {
+            opener = {
+              epy = [
+                {
+                  run = "epy \"$@\"";
+                  block = true;
+                  desc = "Open with epy";
+                }
+              ];
+            };
+            prepend-rules = [
+              {
+                mime = "application/epub+zip";
+                use = "epy";
+              }
+              {
+                name = "*.epub";
+                use = "epy";
+              }
+            ];
             mgr = {
-              show_hidden = true;
+              show-hidden = true;
             };
             plugin = {
-              prepend_previewers = [
+              prepend-previewers = [
                 # { name = "*.md"; run = "glow"; }
                 {
                   name = "*.csv";
                   run = "rich-preview";
+                  mime = "text/csv";
                 } # for csv files
                 {
                   name = "*.md";
                   run = "rich-preview";
+                  mime = "text/x-markdown";
                 } # for markdown (.md) files
                 {
                   name = "*.rst";
                   run = "rich-preview";
+                  mime = "text/x-rst";
                 } # for restructured text (.rst) files
                 {
                   name = "*.ipynb";
                   run = "rich-preview";
+                  mime = "application/x-ipynb+json";
                 } # for jupyter notebooks (.ipynb)
                 {
                   name = "*.json";
                   run = "rich-preview";
+                  mime = "application/json";
                 } # for json (.json) files
                 #    { name = "*.lang_type"; run = "rich-preview"} # for particular language files eg. .py, .go., .lua, etc.
               ];
