@@ -6,6 +6,7 @@
         extraConfig = ''
           $env.config.show_banner = false
           $env.PATH ++= ['/home/talarys/.bun/bin']
+          $env.PATH ++= ['/home/talarys/.npm-global/bin']
         '';
         shellAliases = { };
       };
