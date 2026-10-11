@@ -12,7 +12,9 @@
         zip # Create ZIP archives
         ffmpeg # Multimedia framework
         mkpasswd # Make password hash
+        zellij # Multiplexer
         herdr # Multiplexer
+        tmux # Multiplexer
 
         # Disk Usage Analyzers
         dua # Disk usage analyzer with TUI
