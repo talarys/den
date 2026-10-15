@@ -19,6 +19,7 @@
       <shell/nushell>
       <shell/yazi>
       <shell/env>
+      <apps/llm-agents>
     ];
 
     nixos =
