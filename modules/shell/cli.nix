@@ -43,6 +43,8 @@
         # Android Development
         scrcpy # Android device mirroring
         android-tools # Android platform tools
+
+        python3Packages.pylatexenc
       ];
     };
 }
