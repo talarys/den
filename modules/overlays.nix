@@ -3,7 +3,7 @@
   den.aspects.overlays.nixos = {
     nixpkgs.overlays = [
       (_final: prev: {
-        neovim = inputs.nvix.packages.${prev.system}.default;
+        neovim = inputs.neovim.packages.${prev.system}.default;
       })
     ];
   };
