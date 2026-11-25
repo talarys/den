@@ -31,12 +31,10 @@
     };
 
     # Den
-    den.url = "github:vic/den/latest";
-    flake-aspects.url = "github:vic/flake-aspects";
-    flake-file.url = "github:vic/flake-file";
+    den.url = "github:denful/den/latest";
+    flake-aspects.url = "github:denful/flake-aspects";
+    import-tree.url = "github:denful/import-tree";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    import-tree.url = "github:vic/import-tree";
-    systems.url = "github:nix-systems/default";
 
     #Software
     catppuccin.url = "github:catppuccin/nix";
