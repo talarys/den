@@ -1,23 +1,21 @@
 {
-  den.aspects.system._.networking = {
-    nixos = {
-      networking = {
-        firewall = {
-          enable = true;
-          allowedTCPPorts = [
-            80
-            443
-            3000
-            5173
-            8080
-          ];
-          allowedUDPPorts = [ 3377 ];
-        };
-        networkmanager.enable = true;
-        wireless.enable = true;
-        nameservers = [
-          "1.1.1.1" # Cloudflare
-          "8.8.8.8" # Google
+  system,
+  ...
+}:
+{
+  system.networking.nixos = {
+    networking = {
+      # NetworkManager owns interfaces and DNS; do not also enable
+      # `networking.wireless` (they fight over wpa_supplicant) and do not set
+      # `networking.nameservers` (ignored while NM manages resolv.conf).
+      networkmanager.enable = true;
+
+      firewall = {
+        enable = true;
+        allowedTCPPorts = [
+          80
+          443
+          13378 # audiobookshelf
         ];
       };
     };

@@ -1,5 +1,6 @@
+{ shell, ... }:
 {
-  den.aspects.shell._.yazi.homeManager =
+  shell.yazi.homeManager =
     { pkgs, ... }:
     let
       flavors = pkgs.fetchFromGitHub {
@@ -34,14 +35,14 @@
             glow = pkgs.fetchFromGitHub {
               owner = "Reledia";
               repo = "glow.yazi";
-              rev = "main";
+              rev = "bd3eaa58c065eaf216a8d22d64c62d8e0e9277e9";
               hash = "sha256-mzW/ut/LTEriZiWF8YMRXG9hZ70OOC0irl5xObTNO40=";
             };
             rich-preview = pkgs.fetchFromGitHub {
               owner = "AnirudhG07";
               repo = "rich-preview.yazi";
-              rev = "main";
-              hash = "sha256-KHmjff7tHFLkPqOs8IdWQ0mCliSZn/mIKYof+ulnddk=";
+              rev = "02597c4a129a36e3ab013b1fd052cf0f555d5490";
+              hash = "sha256-8QfBzKyNmKFxwtOmhhpnxUZBRmrN3mPWV/n/0MZlsYo=";
             };
           };
           settings = {

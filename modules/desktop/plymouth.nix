@@ -1,5 +1,6 @@
+{ desktop, ... }:
 {
-  den.aspects.desktop._.plymouth.nixos =
+  desktop.plymouth.nixos =
     { pkgs, ... }:
     {
       boot.plymouth = {

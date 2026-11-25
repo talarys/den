@@ -1,5 +1,6 @@
+{ shell, ... }:
 {
-  den.aspects.shell._.distrobox.homeManager.programs = {
+  shell.distrobox.homeManager.programs = {
     distrobox.enable = true;
     distrobox.enableSystemdUnit = false;
   };

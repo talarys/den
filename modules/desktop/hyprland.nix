@@ -1,6 +1,6 @@
-{ inputs, ... }:
+{ desktop, inputs, ... }:
 {
-  den.aspects.desktop._.hyprland.nixos =
+  desktop.hyprland.nixos =
     { pkgs, ... }:
     {
       imports = with inputs; [

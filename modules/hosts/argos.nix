@@ -8,7 +8,7 @@
 
   den.aspects.argos = {
     nixos =
-      { lib, pkgs, ... }:
+      { pkgs, ... }:
       {
         imports = [ ../../disko/btrfs.nix ];
 
@@ -23,7 +23,8 @@
           "sr_mod"
         ];
 
-        disko.devices.disk.nvme.device = lib.mkForce "/dev/nvme1n1";
+        # The disko layout (including its target device) lives in
+        # disko/btrfs.nix; override values there, not by inventing a new disk.
 
         fileSystems."/mnt/NVME S" = {
           device = "/dev/disk/by-uuid/44A8CCACA8CC9E34";

@@ -37,20 +37,6 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     #Software
-    catppuccin.url = "github:catppuccin/nix";
-
-    nix-colors.url = "github:misterio77/nix-colors";
-
-    nixcats = {
-      url = "github:talarys/nixcats";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nvix = {
-      url = "github:talarys/nvix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     neovim = {
       url = "github:talarys/neovim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,6 +48,8 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    # Deliberately does NOT follow the root nixpkgs: the kernel patches and the
+    # lantian.cachix cache are built against this flake's pinned nixpkgs.
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     dms = {

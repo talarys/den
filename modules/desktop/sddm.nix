@@ -1,5 +1,6 @@
+{ desktop, ... }:
 {
-  den.aspects.desktop._.sddm.nixos =
+  desktop.sddm.nixos =
     { pkgs, ... }:
     # let
     #   flavor = "mocha";

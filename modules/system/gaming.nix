@@ -1,5 +1,6 @@
+{ system, ... }:
 {
-  den.aspects.system._.gaming.nixos =
+  system.gaming.nixos =
     {
       pkgs,
       ...
@@ -14,18 +15,14 @@
         clinfo
 
         # Game launchers
-        steam
         lutris
         heroic
         umu-launcher
         faugus-launcher
 
-        # Compatibility layers
-        wine # Windows compatibility layer
-        winetricks # Wine helper
+        # Compatibility layers / Proton management
         protonup-qt # Manage Proton versions
         protontricks # Proton helper
-        protonplus # Custom Proton builds
 
         # Game utilities
         gamemode # Optimizations for gaming
@@ -33,13 +30,13 @@
         goverlay # GUI for MangoHud and other overlays
         gamescope # SteamOS compositor
         vkbasalt # Vulkan post-processing
-        dxvk # Direct3D to Vulkan
 
         # Hardware monitoring
         nvtopPackages.nvidia # NVIDIA GPU monitoring
       ];
 
-      # Gaming services
+      # Gaming services. `programs.steam.enable` installs Steam itself, so it
+      # must not also appear in environment.systemPackages.
       programs = {
         steam = {
           enable = true;

@@ -1,5 +1,6 @@
+{ system, ... }:
 {
-  den.aspects.system._.bluetooth.nixos =
+  system.bluetooth.nixos =
     { pkgs, ... }:
     {
       hardware.bluetooth = {

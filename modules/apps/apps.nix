@@ -1,5 +1,6 @@
+{ apps, ... }:
 {
-  den.aspects.apps._.apps.homeManager =
+  apps.apps.homeManager =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

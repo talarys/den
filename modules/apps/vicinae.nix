@@ -1,5 +1,6 @@
+{ apps, ... }:
 {
-  den.aspects.apps._.vicinae.homeManager = {
+  apps.vicinae.homeManager = {
     programs.vicinae = {
       enable = true;
       systemd.enable = true;

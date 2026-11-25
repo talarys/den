@@ -1,5 +1,6 @@
+{ system, ... }:
 {
-  den.aspects.system._.podman.nixos = {
+  system.podman.nixos = {
     virtualisation.podman = {
       enable = true;
       dockerCompat = true;

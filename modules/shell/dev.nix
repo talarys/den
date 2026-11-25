@@ -1,5 +1,6 @@
+{ shell, ... }:
 {
-  den.aspects.shell._.dev.homeManager =
+  shell.dev.homeManager =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
@@ -55,9 +56,7 @@
         ruff # Python linter & formatter
         basedpyright # Python lsp
 
-        # Nix
-        deadnix # Dead code detection for Nix
-        statix # Nix linter & suggestions
+        # Nix (linting tools are owned by modules/shell/nix-tools.nix)
         nixd # Nix language server
         nil # Nix language server
         nixfmt # Nix formatter (RFC style)

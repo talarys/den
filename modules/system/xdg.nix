@@ -1,30 +1,27 @@
 {
-  den.aspects.system._.xdg.homeManager =
-    { config, ... }:
+  system,
+  ...
+}:
+{
+  system.xdg.homeManager =
+    _:
+    let
+      browser = [ "zen.desktop" ];
+      fileManager = [ "org.kde.dolphin.desktop" ];
+      editor = [ "code.desktop" ];
+      player = [ "mpv.desktop" ];
+      viewer = [ "nsxiv.desktop" ];
+      reader = [ "org.pwmt.zathura.desktop" ];
+    in
     {
-      home.sessionVariables = {
-        TERMINAL = "ghostty";
-        BROWSER = "zen";
-        EDITOR = "code";
-        PAGER = "less";
-        GIT_EDITOR = "code --wait";
-        AUDIO_PLAYER = "mpv";
-        VIDEO_PLAYER = "mpv";
-      };
       xdg = {
         enable = true;
-        mimeApps.defaultApplications =
-          let
-            browser = [ "zen.desktop" ];
-            fileManager = [ "org.kde.dolphin.desktop" ];
-            editor = [ "code.desktop" ];
-            player = [ "mpv.desktop" ];
-            viewer = [ "nsxiv.desktop" ];
-            reader = [ "org.pwmt.zathura.desktop" ];
-          in
-          {
+
+        # Required: `defaultApplications` is inert without it.
+        mimeApps = {
+          enable = true;
+          defaultApplications = {
             "application/pdf" = reader;
-            "application/epub" = reader;
             "application/epub+zip" = reader;
 
             "text/html" = browser;
@@ -61,6 +58,10 @@
             "image/png" = viewer;
             "image/webp" = viewer;
           };
+        };
       };
+
+      # Session-wide environment variables live in one place
+      # (modules/shell/env.nix).
     };
 }

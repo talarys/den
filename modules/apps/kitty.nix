@@ -1,5 +1,6 @@
+{ apps, ... }:
 {
-  den.aspects.apps._.kitty.homeManager = {
+  apps.kitty.homeManager = {
     programs = {
       kitty = {
         enable = true;

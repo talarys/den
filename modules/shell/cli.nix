@@ -1,5 +1,6 @@
+{ shell, ... }:
 {
-  den.aspects.shell._.cli.homeManager =
+  shell.cli.homeManager =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
@@ -34,8 +35,8 @@
         gh # GitHub CLI
         delta # Syntax-highlighting pager
         tig # Text-mode interface for Git
-        lazygit # Terminal UI for Git
         gitui # Another terminal UI for Git
+        # lazygit is enabled by modules/shell/utils.nix (programs.lazygit)
 
         # TUI
         epy # Epub reader

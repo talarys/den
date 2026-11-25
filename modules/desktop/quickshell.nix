@@ -1,5 +1,9 @@
 {
-  den.aspects.desktop._.quickshell =
+  desktop,
+  ...
+}:
+{
+  desktop.quickshell.nixos =
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [

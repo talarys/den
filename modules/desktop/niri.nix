@@ -1,7 +1,16 @@
 {
-  den.aspects.desktop._.niri.nixos =
+  desktop,
+  inputs,
+  ...
+}:
+{
+  # Optional desktop: enable with `<desktop/niri>` on a host and drop
+  # `<desktop/kde>` / `<desktop/sddm>`.
+  desktop.niri.nixos =
     { pkgs, ... }:
     {
+      imports = [ inputs.dms.nixosModules.dank-material-shell ];
+
       environment.systemPackages = with pkgs; [
         xdg-desktop-portal-gtk
         xdg-desktop-portal-gnome
@@ -17,11 +26,10 @@
       };
 
       programs = {
-        niri = {
-          enable = true;
-        };
+        niri.enable = true;
 
-        dms-shell = {
+        # Option names come from the `dms` flake module (same as hyprland.nix).
+        dank-material-shell = {
           enable = true;
 
           systemd = {
@@ -29,12 +37,11 @@
             restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
           };
 
-          # Core features
-          enableSystemMonitoring = true; # System monitoring widgets (dgop)
-          enableVPN = true; # VPN management widget
-          enableDynamicTheming = true; # Wallpaper-based theming (matugen)
-          enableAudioWavelength = true; # Audio visualizer (cava)
-          enableCalendarEvents = true; # Calendar integration (khal)
+          enableSystemMonitoring = true;
+          enableVPN = true;
+          enableDynamicTheming = true;
+          enableAudioWavelength = true;
+          enableCalendarEvents = true;
         };
       };
     };

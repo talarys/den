@@ -1,9 +1,10 @@
 {
-  den.aspects.system._.audio.nixos =
-    {
-      pkgs,
-      ...
-    }:
+  system,
+  ...
+}:
+{
+  system.audio.nixos =
+    { pkgs, ... }:
     {
       security.rtkit.enable = true;
 
@@ -13,14 +14,14 @@
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
-        jack.enable = true;
+        # `jack.enable` is deprecated (global LD_LIBRARY_PATH impurity); use the
+        # `pw-jack` wrapper from `pkgs.pipewire.jack` when a JACK client needs it.
       };
 
       environment.systemPackages = with pkgs; [
         pavucontrol # PulseAudio volume control
         playerctl # Media player control
-        pulseaudio # For pactl command
-        easyeffects # For effects
+        easyeffects # PipeWire effects
       ];
     };
 }

@@ -1,14 +1,16 @@
 {
-  den.aspects.system._.ssh = {
-    homeManger = {
-      programs.keychain = {
-        enable = true;
-        enableBashIntegration = true;
-        enableFishIntegration = true;
-        enableNushellIntegration = true;
-        keys = [ "id_ed25519" ];
-        agents = [ "ssh" ];
-      };
+  system,
+  ...
+}:
+{
+  # ssh-agent + key management for the user session.
+  system.ssh.homeManager = {
+    programs.keychain = {
+      enable = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+      enableNushellIntegration = true;
+      keys = [ "id_ed25519" ];
     };
   };
 }

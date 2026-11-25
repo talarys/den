@@ -1,5 +1,6 @@
+{ system, ... }:
 {
-  den.aspects.system._.systemd-boot.nixos = {
+  system.systemd-boot.nixos = {
     boot = {
       loader = {
         systemd-boot = {

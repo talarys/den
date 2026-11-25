@@ -1,5 +1,6 @@
+{ shell, ... }:
 {
-  den.aspects.shell._.fish.homeManager =
+  shell.fish.homeManager =
     { pkgs, ... }:
     {
       programs = {
@@ -23,7 +24,10 @@
             '';
           };
           shellAbbrs = {
-            rebuild = "sudo nixos-rebuild switch --flake /home/talarys/nixos";
+            # `nh` reads programs.nh.osFlake (modules/shell/nh.nix), so the flake
+            # path is defined once and never goes stale here.
+            rebuild = "nh os switch";
+            update = "nh os switch --update";
           };
           shellAliases = {
             ls = "eza --icons --group-directories-first";

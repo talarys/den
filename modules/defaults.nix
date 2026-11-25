@@ -5,8 +5,18 @@
   ...
 }:
 {
-  den.schema.host.home-manager.enable = true;
+  # Every user is a real account with a home directory: `define-user` also
+  # covers standalone homes (`home.username` / `home.homeDirectory`), which the
+  # home-manager NixOS module would otherwise provide only inside a host.
   den.schema.user.classes = [ "homeManager" ];
+
+  # Hosts accept what their users write for them. Declared explicitly instead of
+  # relying on den's transition defaults (removed 2027-01-01), so the behaviour
+  # is stable across den updates and evaluation stays warning-free.
+  den.schema.host.includes = [
+    den.batteries.user-aspects
+    den.batteries.mutual-provider
+  ];
 
   den.default = {
     nixos.system.stateVersion = "26.11";
@@ -61,6 +71,8 @@
   };
 
   den.default.includes = [
+    # Automatically create the user on host and define their home directory.
+    <den/define-user>
     # Automatically create the user on host.
     <den/primary-user>
     # Automatically set hostname

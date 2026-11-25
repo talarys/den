@@ -1,5 +1,6 @@
+{ apps, ... }:
 {
-  den.aspects.apps._.ghostty.homeManager = {
+  apps.ghostty.homeManager = {
     programs.ghostty = {
       enable = true;
       enableBashIntegration = true;

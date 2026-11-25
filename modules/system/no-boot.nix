@@ -1,5 +1,6 @@
+{ system, ... }:
 {
-  den.aspects.system._.no-boot = {
+  system.no-boot = {
     description = "Disables booting for testing";
     nixos = {
       boot.loader.grub.enable = false;

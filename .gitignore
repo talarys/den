@@ -5,3 +5,9 @@ result-*
 # Ignore automatically generated direnv output
 .direnv
 
+# Read-only reference checkouts of den / flake-aspects / import-tree
+denful/
+
+
+# treefmt cache
+.treefmt-cache

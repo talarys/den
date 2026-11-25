@@ -1,5 +1,7 @@
 let
-  device = "/dev/sda";
+  # argos installs on the second NVMe; the disko layout is referenced from
+  # modules/hosts/argos.nix and must match the machine it is installed on.
+  device = "/dev/nvme1n1";
   mountOptions = [
     "noatime"
     "compress=zstd"

@@ -1,5 +1,6 @@
+{ shell, ... }:
 {
-  den.aspects.shell._.aliases.homeManager = {
+  shell.aliases.homeManager = {
     home.shellAliases = {
       cd = "z";
       grep = "rg";

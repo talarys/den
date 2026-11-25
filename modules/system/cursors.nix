@@ -1,5 +1,6 @@
+{ system, ... }:
 {
-  den.aspects.system._.cursors.nixos =
+  system.cursors.nixos =
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [

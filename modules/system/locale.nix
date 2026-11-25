@@ -1,5 +1,9 @@
 {
-  den.aspects.system._.locale = {
+  system,
+  ...
+}:
+{
+  system.locale.nixos = {
     i18n.defaultLocale = "en_US.UTF-8";
     time.timeZone = "Europe/Madrid";
   };

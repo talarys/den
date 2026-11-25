@@ -1,5 +1,6 @@
+{ containers, ... }:
 {
-  den.aspects.containers._.audiobookshelf.nixos = {
+  containers.audiobookshelf.nixos = {
     system.activationScripts = {
       script.text = ''
         install -d -m 755 /var/lib/containers/audiobookshelf/config -o root -g root

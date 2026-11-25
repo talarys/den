@@ -1,5 +1,6 @@
+{ shell, ... }:
 {
-  den.aspects.shell._.utils.homeManager =
+  shell.utils.homeManager =
     { pkgs, ... }:
     {
       programs = {

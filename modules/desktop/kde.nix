@@ -1,6 +1,6 @@
-{ __findFile, ... }:
+{ desktop, __findFile, ... }:
 {
-  den.aspects.desktop._.kde = {
+  desktop.kde = {
     nixos = {
       security.pam.services.sddm.enableKwallet = true;
       services.xserver.enable = true;

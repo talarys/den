@@ -1,19 +1,20 @@
 {
-  den.aspects.shell._.nushell.homeManager = {
-    programs = {
-      nushell = {
-        enable = true;
-        extraConfig = ''
-          $env.config.show_banner = false
-          $env.PATH ++= ['/home/talarys/.bun/bin']
-          $env.PATH ++= ['/home/talarys/.npm-global/bin']
-          $env.PATH ++= ['/home/talarys/.local/bin']
-           if ($env.TERM_PROGRAM? == "WezTerm") {
-                $env.config.shell_integration.osc133 = false
-           }
-        '';
-        shellAliases = { };
-      };
+  shell,
+  ...
+}:
+{
+  shell.nushell.homeManager = _: {
+    programs.nushell = {
+      enable = true;
+      extraConfig = ''
+        $env.config.show_banner = false
+        if ($env.TERM_PROGRAM? == "WezTerm") {
+          $env.config.shell_integration.osc133 = false
+        }
+      '';
+      # `home.sessionPath` (see modules/shell/env.nix) exports PATH additions
+      # for nushell, fish and bash without hard-coding the home directory.
+      shellAliases = { };
     };
   };
 }

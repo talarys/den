@@ -1,5 +1,6 @@
+{ system, ... }:
 {
-  den.aspects.system._.fonts.nixos =
+  system.fonts.nixos =
     {
       pkgs,
       ...

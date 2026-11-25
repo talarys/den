@@ -1,5 +1,6 @@
+{ system, ... }:
 {
-  den.aspects.system._.nvidia.nixos = {
+  system.nvidia.nixos = {
     services.xserver.videoDrivers = [ "nvidia" ];
     hardware.graphics.enable = true;
     hardware.graphics.enable32Bit = true;

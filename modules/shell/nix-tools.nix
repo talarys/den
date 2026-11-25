@@ -1,16 +1,16 @@
+{ shell, ... }:
 {
-  den.aspects.shell._.nix-tools = {
+  shell.nix-tools = {
     homeManager =
       { pkgs, ... }:
       {
         home.packages = with pkgs; [
-          # Nix
+          # Nix development / inspection. `nh`, nom, nix-tree and friends are
+          # owned by modules/shell/nh.nix.
           deadnix
           nix-init
           nix-inspect
-          nix-output-monitor
           nixpkgs-review
-          nix-tree
           nix-update
           nurl
           statix

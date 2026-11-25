@@ -1,5 +1,6 @@
+{ shell, ... }:
 {
-  den.aspects.shell._.nh.homeManager =
+  shell.nh.homeManager =
     { config, pkgs, ... }:
     {
       home.packages = with pkgs; [
