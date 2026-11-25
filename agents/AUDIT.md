@@ -30,7 +30,7 @@ nix flake check                                             # checks + treefmt
 | F12 | deprecated `pipewire.jack`, `pulseaudio` package | both removed |
 | F13 | deprecated `prev.system` in overlay | `prev.stdenv.hostPlatform.system` |
 | F14 | duplicated/contradictory env vars and packages | `shell/env.nix` is the only session-env source; package ownership split per aspect |
-| F15 | `den.schema.host.home-manager.enable` was a no-op | removed |
+| F15 | `den.schema.host.home-manager.enable` thought to be a no-op | **corrected in round 2**: it is a real option (`host.home-manager.enable`, default derived from user classes). Re-added explicitly. |
 | F16 | yazi plugins pinned to `rev = "main"` | pinned to commits (hashes re-prefetched) |
 | F17 | Steam/Wine installed twice / system-wide | duplicate and system-wide Wine/dxvk removed |
 | F18 | `libvirtd.qemu.runAsRoot = true` | removed (default false); groups now via `provides.to-users.user` |
@@ -112,3 +112,83 @@ Nix only sees `git`-tracked files. A newly created module is invisible to
 nothing". Same for deletions: `rm` without `git add` leaves the file in the
 store/check output. `treefmt` also corrupts its cache if you forget; run
 `nix run .#formatter.x86_64-linux -- --no-cache` to force a clean pass.
+
+---
+
+# Round 2 — den best-practice audit
+
+Second pass, this time against the *den* documentation and templates
+(`denful/den/docs/`, `denful/den/templates/`) rather than against runtime
+correctness. Checked den `12b2146` (the locked rev) with the local clone at
+`fa26ee3`.
+
+| # | Finding | Resolution |
+|---|---|---|
+| D1 | `den.schema.user.classes` was a plain definition. `classes` is a list, so a per-user declaration **concatenates** with it; a user could not opt out of home-manager. den's own from-zero-to-den guide uses `lib.mkDefault`. | `lib.mkDefault [ "homeManager" ]` |
+| D2 | `den.default` stateVersions were plain definitions, so no host/user could pin its own. den's guide point 3 uses `lib.mkDefault`. | both `lib.mkDefault` |
+| D3 | `modules/den.nix` declared `systems = builtins.attrNames den.hosts;`. den already sets flake-parts `systems` from `den.hosts` **+ `den.homes`** (`den/modules/outputs/systems.nix`), so the manual list could drift (e.g. a home on a system with no host). | removed; comment explains why |
+| D4 | Round 1 removed `den.schema.host.home-manager.enable` calling it a no-op. It is a real option (`host.home-manager.enable`, default = "this host has a user with the class"); `declare-hosts` documents it as the way to "specify features of all hosts". | re-added explicitly |
+| D5 | `<den/host-aspects>` sat in `den.default.includes`, which is walked in host scope too. The battery's documented form for "every user opts in" is `den.schema.user.includes`. | moved to `den.schema.user.includes` |
+| D6 | Firewall ports were hardcoded in `system/networking.nix` **and** in the container's `ports`, with 13378 declared twice (and only reachable by reading the container). This is den's canonical **quirk** example. | `den.quirks.firewall`; the container emits `firewall.ports = [ 13378 ]`, `system/networking.nix` aggregates |
+| D7 | Optional desktops were selected by commenting includes in `modules/hosts/argos.nix` (`# <desktop/niri>`), i.e. dormant code. den's mechanism for "attach an aspect by a rule" is a policy. | host freeform attribute `session = "plasma";` + `den.policies.session` in `modules/desktop/session.nix`, with a validated error for typos |
+| D8 | `den.schema.<kind>` cannot be assigned a module *and* have sibling sub-options at the same time ("attribute `den.schema.host` already defined"). Sibling attributes (`.includes`, `.home-manager.enable`) merge fine. | avoided by using host freeform metadata for `session`; documented in `DEN.md` |
+| D9 | checkmate (`nix flake check --override-input target . github:denful/checkmate`), den's own CI harness, enables `deadnix` and `nixf-diagnose`. Both report **false positives** on this repo: a lambda arg used only in an attribute path (`{ system, ... }: { system.x = 1; }`) is reported unused. den itself disables both in `checkmate/modules/formatter.nix`. | not added to `treefmt`; `nixfmt` + `statix` stay |
+
+## How D6 and D7 look
+
+```nix
+# modules/system/networking.nix — the only place that opens ports
+system.networking.nixos = { firewall, lib, ... }: {
+  networking.firewall.allowedTCPPorts = [ 80 443 ] ++ lib.concatMap (f: f.ports or [ ]) firewall;
+};
+
+# modules/containers/audiobookshelf.nix — declares, does not open
+containers.audiobookshelf.firewall.ports = [ 13378 ];
+```
+
+```nix
+# modules/hosts/argos.nix — no commented includes
+den.hosts.x86_64-linux.argos = {
+  users.talarys = { };
+  session = "plasma";
+};
+```
+
+`modules/desktop/session.nix` maps `session` to a bundle (`plasma` =
+`desktop.sddm` + `desktop.kde`; `niri` and `hyprland` bring their own greeter)
+through `den.lib.policy.include`, and throws on an unknown value:
+
+```
+den: host 'argos' has unknown session 'gnome'; expected one of: hyprland, niri, plasma
+```
+
+## Probes used for round 2
+
+```console
+# classes is a list: without mkDefault this stays true even when the user opts out
+$ nix eval --json .#nixosConfigurations.argos.config.home-manager.users --apply builtins.attrNames
+# with `users.talarys.classes = [ "user" ]` -> option `home-manager` disappears
+
+# quirk aggregation
+$ nix eval --json .#nixosConfigurations.argos.config.networking.firewall.allowedTCPPorts
+[80,443,13378]
+
+# policy selection
+$ nix eval --json .#nixosConfigurations.argos.config.services.xserver.desktopManager.plasma6.enable
+true
+$ nix eval --json .#nixosConfigurations.void.config.services.displayManager.sddm.enable
+false
+```
+
+## Kept as-is on purpose
+
+- `den.aspects.overlays` is a top-level aspect, not in a namespace: it is
+  cross-cutting (every host's nixpkgs), not a `system/` feature. The CachyOS
+  kernel overlay stays in `modules/hosts/argos.nix` with the kernel choice it
+  belongs to.
+- The `settings` pattern (reserved `settings` key + generated option type) would
+  only pay off with several hosts tuning the same reusable aspect; today each
+  host owns its own file. See den's `guides/aspect-settings`.
+- `den.lib.strict` / `isStrict` was not enabled: it would turn every undeclared
+  host attribute into an error, which conflicts with the `session` freeform
+  attribute above unless it is declared as a schema option first.

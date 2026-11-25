@@ -16,8 +16,13 @@ Non-negotiables:
 3. Aspects are grouped in namespaces (`shell`, `system`, `apps`, `desktop`,
    `containers`) and included as `<namespace/aspect>`. Never define
    `den.aspects.<namespace>.*` next to a namespace of the same name.
-4. `nix flake check` does not evaluate `homeConfigurations` — the checks in
+4. Shared data goes through a quirk (`firewall.ports`), per-host choices through
+   host attributes consumed by a policy (`session`) — don't duplicate config by
+   hand or comment includes in and out.
+5. Defaults that should stay overridable need `lib.mkDefault`; a plain list
+   definition concatenates with other definitions.
+6. `nix flake check` does not evaluate `homeConfigurations` — the checks in
    `modules/checks.nix` do.
-5. `denful/` is a read-only reference clone (git-ignored). Never edit it.
-6. Stage files explicitly; never `git add -A`.
-7. Do not commit secrets.
+7. `denful/` is a read-only reference clone (git-ignored). Never edit it.
+8. Stage files explicitly; never `git add -A`.
+9. Do not commit secrets.

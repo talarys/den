@@ -159,12 +159,27 @@ shadows it (see the warning in section 6).
 
 ## 8. Schema, defaults, batteries
 
-- `den.schema.{conf,host,user,home,aspect}` — freeform per-kind metadata modules,
-  plus `includes` / `excludes` / `inherits` / `isEntity` control keys.
-  e.g. `den.schema.user.classes = [ "homeManager" ]` is what actually enables
-  home-manager for every user. (Setting `den.schema.host.home-manager.enable` does
-  **nothing** — freeform metadata nothing reads.)
-- `den.default` — an aspect walked in *both* host and user scopes. Good place for
+- `den.schema.{conf,host,user,home,aspect}` — per-kind metadata modules plus
+  control keys (`includes`, `excludes`, `inherits`, `isEntity`, `isStrict`).
+  e.g. `den.schema.user.classes = lib.mkDefault [ "homeManager" ]` is what
+  enables home-manager for every user. `den.schema.host.home-manager.enable` is
+  a **real** option (`host.<optionPath>.enable`, default derived from the users'
+  classes) that the home-manager battery reads.
+
+  Shape rule: a schema entry is one module **or** a set of sub-attributes
+  (`.includes`, `.home-manager.enable`, `.classes`, …). Assigning
+  `den.schema.host = <module>` together with `den.schema.host.includes = …`
+  fails with "attribute `den.schema.host` already defined".
+
+  Defaults that should remain overridable need `lib.mkDefault`: a plain list
+  definition **concatenates** with another one, so without it a user cannot
+  choose a different `classes` list.
+- `den.systems` — flake-parts `systems`, derived from `den.hosts` + `den.homes`
+  (`den/modules/outputs/systems.nix`). Don't set it manually unless you add a
+  system with no entity.
+- Freeform host/user attributes are legal and reachable from aspects
+  (`den.hosts.x86_64-linux.argos.session = "plasma"` → `host.session`). This is
+  the lightweight alternative to a schema option when one policy consumes it.- `den.default` — an aspect walked in *both* host and user scopes. Good place for
   universal config; dangerous for parametric functions (they run once per scope).
 - `den.batteries.*` (aliases `den.provides.*`, `den._.*`) — shipped aspects:
   `primary-user`, `define-user`, `hostname`, `host-aspects`, `user-aspects`,
@@ -209,6 +224,11 @@ See `denful/den/docs/src/content/docs/explanation/crossing-scopes.mdx`.
 | per-host tunables of a reusable aspect | `settings` pattern (reserved key) |
 | share data, not modules | quirk (+ pipes to cross scopes) |
 
+This repo uses two mechanisms beyond `includes`: a `firewall` **quirk**
+(`den.quirks.firewall` in `modules/system/networking.nix`; producers write
+`firewall.ports = [ … ]`) and a **policy** for the desktop session
+(`den.policies.session` in `modules/desktop/session.nix`).
+
 ## 11. Tooling in this repo
 
 - Format: `just fmt` → treefmt (`nixfmt` + `statix`). If formatting seems to do
@@ -216,6 +236,11 @@ See `denful/den/docs/src/content/docs/explanation/crossing-scopes.mdx`.
 - Check: `just check` → `nix flake check` (builds `checks.home-talarys`,
   `checks.argos-wiring`, and the treefmt check).
 - Rebuild: `just rebuild` (`nh os switch .`).
+- Do not add `deadnix` / `nixf-diagnose` here: both report a lambda arg used only
+  in an attribute path (`{ system, ... }: { system.x = 1; }`) as unused, which is
+  every aspect in this repo. den disables both in its own `checkmate` formatter,
+  and `checkmate` treefmt also runs with `on-unmatched = fatal`, so it trips on
+  `justfile` and the vendored mpv data.
 
 ## 12. den repo map (for reading source)
 

@@ -4,7 +4,11 @@
   ...
 }:
 {
-  den.hosts.x86_64-linux.argos.users.talarys = { };
+  den.hosts.x86_64-linux.argos = {
+    users.talarys = { };
+    # modules/desktop/session.nix includes the matching bundle for this value.
+    session = "plasma";
+  };
 
   den.aspects.argos = {
     nixos =
@@ -51,11 +55,6 @@
       <system/gaming>
       <system/xdg>
       <system/podman>
-
-      <desktop/sddm>
-      <desktop/kde>
-      # <desktop/niri>
-      # <desktop/quickshell>
 
       <apps/apps>
       <apps/ghostty>

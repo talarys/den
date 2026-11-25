@@ -2,13 +2,20 @@
   den,
   __findFile,
   inputs,
+  lib,
   ...
 }:
 {
   # Every user is a real account with a home directory: `define-user` also
   # covers standalone homes (`home.username` / `home.homeDirectory`), which the
   # home-manager NixOS module would otherwise provide only inside a host.
-  den.schema.user.classes = [ "homeManager" ];
+  # mkDefault so a host/user declaration can still pick a different set of
+  # classes (`classes` is a list, so a plain definition would be concatenated).
+  den.schema.user.classes = lib.mkDefault [ "homeManager" ];
+
+  # Explicit: every host integrates home-manager, whatever its users declare.
+  # The option defaults to "this host has a user with the homeManager class".
+  den.schema.host.home-manager.enable = true;
 
   # Hosts accept what their users write for them. Declared explicitly instead of
   # relying on den's transition defaults (removed 2027-01-01), so the behaviour
@@ -18,9 +25,15 @@
     den.batteries.mutual-provider
   ];
 
+  # Every user takes the host's `homeManager` content (battery docs: "every user
+  # on every host opts in"). Put on the user schema, where it belongs, instead
+  # of on `den.default` which is also walked in host scope.
+  den.schema.user.includes = [ den.batteries.host-aspects ];
+
   den.default = {
-    nixos.system.stateVersion = "26.11";
-    homeManager.home.stateVersion = "26.11";
+    # Fleet-wide defaults; mkDefault so a host or user can pin its own.
+    nixos.system.stateVersion = lib.mkDefault "26.11";
+    homeManager.home.stateVersion = lib.mkDefault "26.11";
 
     nixos = {
       imports = [
@@ -77,7 +90,5 @@
     <den/primary-user>
     # Automatically set hostname
     <den/hostname>
-    # Allows host to ingest homeManager aspects
-    <den/host-aspects>
   ];
 }

@@ -14,7 +14,7 @@ denful/              git-ignored read-only clones of den / flake-aspects / impor
 agents/              these docs
 modules/
   den.nix            den wiring: namespaces, __findFile, treefmt
-  defaults.nix       den.default (all entities) + den.schema.*
+  defaults.nix       den.default (all entities) + den.schema.* defaults
   checks.nix         flake checks that guard the wiring
   hosts/<host>.nix   den.hosts.<system>.<host> + that host's aspect
   users/<user>.nix   den.homes.<system>.<user> + that user's aspect
@@ -23,6 +23,7 @@ modules/
   shell/*.nix        home-manager aspects
   apps/*.nix         applications (split by class when needed)
   desktop/*.nix      compositors / display managers / theming
+                     (`session.nix` maps a host's `session` to a bundle)
   containers/*.nix   podman services
 ```
 
@@ -56,25 +57,33 @@ aspect shadows the namespace (see `AUDIT.md` F23).
 
 | Entity | Declared in | Aspect | Notes |
 |---|---|---|---|
-| host `argos` (x86_64-linux) | `modules/hosts/argos.nix` | `den.aspects.argos` | Daily driver: CachyOS Zen4 kernel, NVIDIA, KDE/SDDM, gaming, btrfs disko, audiobookshelf. |
-| host `void` (x86_64-linux) | `modules/hosts/void.nix` | `den.aspects.void` | NixOS-WSL. Minimal: overlays + ssh. |
+| host `argos` (x86_64-linux) | `modules/hosts/argos.nix` | `den.aspects.argos` | Daily driver: CachyOS Zen4 kernel, NVIDIA, `session = "plasma"`, gaming, btrfs disko, audiobookshelf. |
+| host `void` (x86_64-linux) | `modules/hosts/void.nix` | `den.aspects.void` | NixOS-WSL. Minimal: overlays + ssh, no session. |
 | user `talarys` on both | `den.hosts.*.users.talarys = { }` | `den.aspects.talarys` | `homeManager` via `den.schema.user.classes`. |
 | standalone home `talarys` | `den.homes.x86_64-linux.talarys` | (same user aspect) | Guarded by `checks.home-talarys`. |
 
 Global wiring in `modules/defaults.nix`:
 
-- `den.schema.user.classes = [ "homeManager" ]` — home-manager for every user.
+- `den.schema.user.classes = lib.mkDefault [ "homeManager" ]` — home-manager for
+  every user, still overridable per user (`classes` is a list; without
+  `mkDefault` a per-user declaration would be *concatenated*, not chosen).
+- `den.schema.host.home-manager.enable = true` — every host integrates
+  home-manager regardless of user classes (den's own default derives it).
 - `den.schema.host.includes = [ user-aspects mutual-provider ]` — hosts accept
   what users write for them, explicitly (not via den's 2027 transition default).
-- `den.default.includes = [ <den/define-user> <den/primary-user> <den/hostname> <den/host-aspects> ]`
-  — accounts + home dirs, wheel/networkmanager, hostname, and "every user takes
-  the host's `homeManager` content".
+- `den.schema.user.includes = [ host-aspects ]` — every user takes the host's
+  `homeManager` content.
+- `den.default.includes = [ define-user primary-user hostname ]` — accounts, home
+  dirs, wheel/networkmanager, hostname.
+- `den.default.nixos` / `den.default.homeManager` use `lib.mkDefault` for
+  `stateVersion`, so a host/user can pin its own.
 
 ## Aspect inventory
 
 Included by `argos`: `overlays`, `system/{systemd-boot,locale,ssh,audio,fonts,cursors,networking,nvidia,gaming,xdg,podman}`,
-`desktop/{sddm,kde}`, `apps/{apps,ghostty,kitty,mpv,vicinae,zen}`,
-`containers/audiobookshelf`.
+`apps/{apps,ghostty,kitty,mpv,vicinae,zen}`, `containers/audiobookshelf`,
+plus `desktop/plasma` (= `desktop/sddm` + `desktop/kde`) pulled in by the
+`session` policy.
 
 Included by `void`: `overlays`, `system/ssh`.
 
@@ -89,8 +98,8 @@ Optional, defined but **not** included (verify before enabling):
 | `system/virt` | `modules/system/virt.nix` | libvirt/qemu; groups via `provides.to-users.user` |
 | `system/no-boot` | `modules/system/no-boot.nix` | CI helper from den's template |
 | `desktop/plymouth` | `modules/desktop/plymouth.nix` | boot splash |
-| `desktop/hyprland` | `modules/desktop/hyprland.nix` | imports the `dms` flake module |
-| `desktop/niri` | `modules/desktop/niri.nix` | imports the `dms` flake module |
+| `desktop/hyprland` | `modules/desktop/hyprland.nix` | selectable via `session = "hyprland"` |
+| `desktop/niri` | `modules/desktop/niri.nix` | selectable via `session = "niri"` |
 | `desktop/quickshell` | `modules/desktop/quickshell.nix` | Qt/Wayland deps only |
 | `apps/localsend` | `modules/apps/localsend.nix` | home package only |
 
@@ -113,13 +122,56 @@ them as unreviewed until you enable one and run `just check`.
   CLI utilities in `shell/cli.nix`. Don't duplicate a package across aspects.
 - Session environment variables (`EDITOR`, `BROWSER`, `PATH` additions) live only
   in `modules/shell/env.nix`.
+- `den.default` / `den.schema.*` defaults that should stay overridable need
+  `lib.mkDefault`. A plain list definition **concatenates** with another
+  definition (e.g. `classes`), so a user could not opt out.
+- `den.schema.<kind>` can be a module **or** a set of sub-attributes
+  (`.includes`, `.home-manager.enable`, …), but not both at once: assigning
+  `den.schema.host = <module>` alongside `den.schema.host.includes = …` fails
+  with "attribute `den.schema.host` already defined".
+- Shared data (ports, lists) goes through a **quirk**, not duplicated config:
+  producers write `firewall.ports = [ … ]`, `system/networking.nix` aggregates
+  and is the only place that opens ports.
+- Per-host choices (which desktop) are **host freeform attributes** consumed by
+  a policy (`session` + `den.policies.session`), never includes commented out.
+- No `systems` in `modules/den.nix`: den derives flake-parts `systems` from
+  `den.hosts` + `den.homes`.
 - `with pkgs;` is used inside `home.packages` / `environment.systemPackages`
   lists; prefer `inherit` elsewhere.
+- Format with `just fmt` (nixfmt + statix via treefmt). Do **not** add
+  `deadnix`/`nixf-diagnose`: both report a lambda arg used only in an attribute
+  path (`{ system, ... }: { system.x = 1; }`) as unused — den disables them in
+  its own formatter for that reason.
 - Format with `just fmt` (nixfmt + statix via treefmt). Commit messages:
   `type: summary` (`feat`, `fix`, `chore`, `docs`) — history is mixed, keep new
   commits clean.
 
 ## Recipes
+
+### Switch a host's desktop session
+
+```nix
+# modules/hosts/<host>.nix
+session = "niri";   # or "plasma" / "hyprland"
+```
+
+`modules/desktop/session.nix` maps the value to a bundle through
+`den.lib.policy.include` and throws on an unknown value. Add a new desktop by
+extending the `bundles` attrset there plus the aspect itself.
+
+### Open a port for a service
+
+Declare it on the aspect that needs it; never edit the firewall list:
+
+```nix
+containers.<svc> = {
+  firewall.ports = [ 8081 ];
+  nixos.virtualisation.oci-containers.containers.<svc>.ports = [ "8081:80" ];
+};
+```
+
+`system/networking.nix` concatenates every `firewall.ports` entry in the host
+scope (den quirk `firewall`).
 
 ### Add a package to every user
 

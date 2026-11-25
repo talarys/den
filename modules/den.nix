@@ -19,7 +19,9 @@
 
   _module.args.__findFile = den.lib.__findFile;
 
-  systems = builtins.attrNames den.hosts;
+  # No `systems` here on purpose: den sets flake-parts' `systems` from
+  # `den.hosts` + `den.homes` (den/modules/outputs/systems.nix), so declaring it
+  # manually would only drift from the entity declarations.
 
   perSystem.treefmt = {
     projectRootFile = "flake.nix";

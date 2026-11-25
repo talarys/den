@@ -7,8 +7,8 @@ aspect-oriented Nix on top of `flake-parts` + `import-tree`.
 
 | Host | What it is |
 |---|---|
-| `argos` | Daily driver: Ryzen/NVIDIA desktop, CachyOS Zen4 kernel, KDE Plasma 6 + SDDM, gaming stack, btrfs-on-NVMe (disko), audiobookshelf container. |
-| `void` | NixOS-WSL, minimal. |
+| `argos` | Daily driver: Ryzen/NVIDIA desktop, CachyOS Zen4 kernel, `session = "plasma"` (KDE Plasma 6 + SDDM), gaming stack, btrfs-on-NVMe (disko), audiobookshelf container. |
+| `void` | NixOS-WSL, minimal (no graphical session). |
 
 User `talarys` on both, with a standalone home-manager configuration as well.
 
@@ -27,15 +27,17 @@ modules/
   system/      NixOS-class aspects: audio, fonts, networking, nvidia, ...
   shell/       home-manager aspects: fish, nushell, cli, dev, git, ...
   apps/        applications, split by class where needed
-  desktop/     compositors, display managers, theming
-  containers/  podman services
+  desktop/     compositors, display managers, session policy, theming
+  containers/  podman services (declare `firewall.ports`, never edit the firewall)
   overlays.nix nixpkgs overlays
 agents/        documentation for AI agents (and humans) working on this repo
 ```
 
 Aspects live in **namespaces** (`shell`, `system`, `apps`, `desktop`,
 `containers`): a file defines `shell.fish = { homeManager = ...; }` and a host
-includes it as `<shell/fish>`.
+includes it as `<shell/fish>`. Cross-cutting choices are declarative: a host sets
+`session = "plasma"` and a policy includes the right desktop bundle; a service
+declares `firewall.ports` and one aspect opens them.
 
 Every file under `modules/` is imported automatically. New files must be
 `git add`ed before Nix can see them.
@@ -58,6 +60,10 @@ just clean            # garbage collect
 - **a GUI app** → `modules/apps/apps.nix`, or its own file if it needs config
 - **a system service** → new file under `modules/system/`, then add
   `<system/<name>>` to the host's `includes` in `modules/hosts/<host>.nix`
+- **a listening port** → `firewall.ports = [ … ]` on the aspect that owns the
+  service; `system/networking.nix` opens it
+- **a different desktop** → `session = "niri"` (or `plasma`, `hyprland`) on the
+  host
 - **a host / user** → copy the shape of `modules/hosts/argos.nix` /
   `modules/users/talarys.nix`
 
